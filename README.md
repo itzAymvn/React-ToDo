@@ -14,6 +14,12 @@ This is a TodoList app built with ReactJs & React Bootstrap. It is a simple app 
 1. Run `npm run build`
 2. The build files will be in the `build` folder
 
+# To be added
+
+-   [ ] Add a delete button to each task
+-   [ ] Add a delete completed button
+-   [ ] Add a delete pending button
+
 # License
 
 [![GitHub](https://img.shields.io/github/license/ItzAymvn/TodoList-react?style=for-the-badge)](./LICENSE)
