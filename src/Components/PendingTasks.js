@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 const PendingTasks = () => {
     const { tasks, setTasks } = useContext(tasksContext);
     let pendingTasks = tasks.filter((task) => task.taskCompleted === false);
-    document.title = `Pending Tasks (${pendingTasks.length})`;
+
     return (
         <div className="tasks">
             <h1 className="text-center">
