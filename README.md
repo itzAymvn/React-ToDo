@@ -16,9 +16,9 @@ This is a TodoList app built with ReactJs & React Bootstrap. It is a simple app 
 
 # To be added
 
--   [ ] Add a delete button to each task
--   [ ] Add a delete completed button
--   [ ] Add a delete pending button
+-   [x] Add a delete button to each task
+-   [x] Add a delete completed button
+-   [x] Add a delete pending button
 
 # License
 
