@@ -2,6 +2,10 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import tasksContext from "./Context/Tasks"; // context that hold the tasks array
 import RenderTasks from "./Components/RenderTasks"; // component that renders the tasks
+import { Routes, Route, Link } from "react-router-dom";
+
+import PendingTasks from "./Components/PendingTasks";
+import CompletedTasks from "./Components/CompletedTasks";
 
 // BOOTSTRAP CSS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,9 +31,12 @@ function App() {
 
     return (
         <div className="container-fluid py-3">
-            <h1 className="text-center">
-                <i className="bi bi-kanban mx-2"></i>Task Manager
-            </h1>
+            <Link to="/" className="text-decoration-none">
+                <h1 className="text-center">
+                    <i className="bi bi-kanban mx-2"></i>Task Manager
+                </h1>
+            </Link>
+            <hr />
             <div className="AddTask">
                 <InputGroup className="mb-3">
                     <Form.Control
@@ -66,7 +73,11 @@ function App() {
                 </InputGroup>
             </div>
             <tasksContext.Provider value={{ tasks, setTasks }}>
-                <RenderTasks />
+                <Routes>
+                    <Route path="/" element={<RenderTasks />} />
+                    <Route path="/pending" element={<PendingTasks />} />
+                    <Route path="/completed" element={<CompletedTasks />} />
+                </Routes>
             </tasksContext.Provider>
         </div>
     );

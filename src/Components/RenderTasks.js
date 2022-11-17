@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import tasksContext from "../Context/Tasks";
 import Task from "./Task";
+import { Link } from "react-router-dom";
 
 // REACT BOOTSTRAP
 import Alert from "react-bootstrap/Alert";
@@ -18,27 +19,37 @@ const RenderTasks = () => {
                     </Alert>
                     <Alert variant="info">
                         <div className="d-flex justify-content-around">
-                            <Badge bg="light text-dark">
-                                {
-                                    tasks.filter(
-                                        (task) => task.taskCompleted === false
-                                    ).length
-                                }{" "}
-                                Pending
-                            </Badge>
-                            <Badge bg="info">
-                                {
-                                    tasks.filter(
-                                        (task) => task.taskCompleted === true
-                                    ).length
-                                }{" "}
-                                Completed
-                            </Badge>
+                            <Link to="/pending">
+                                <Badge bg="light text-dark">
+                                    View{" "}
+                                    {
+                                        tasks.filter(
+                                            (task) =>
+                                                task.taskCompleted === false
+                                        ).length
+                                    }{" "}
+                                    Pending
+                                </Badge>
+                            </Link>
+                            <Link to="/completed">
+                                <Badge bg="info">
+                                    View{" "}
+                                    {
+                                        tasks.filter(
+                                            (task) =>
+                                                task.taskCompleted === true
+                                        ).length
+                                    }{" "}
+                                    Completed
+                                </Badge>
+                            </Link>
                         </div>
                     </Alert>
+                    <hr />
                     <h1 className="text-center">
                         <i className="bi bi-list-task mx-2"></i>Your tasks
                     </h1>
+                    <hr />
                     {tasks.length > 0 &&
                         tasks.map((task, index) => {
                             return (
@@ -46,7 +57,7 @@ const RenderTasks = () => {
                             );
                         })}
                     <button
-                        className="btn btn-danger"
+                        className="btn btn-danger m-2"
                         onClick={() => {
                             localStorage.clear();
                             window.location.reload();
@@ -55,7 +66,7 @@ const RenderTasks = () => {
                     </button>
 
                     <button
-                        className="btn btn-outline-dark mx-2"
+                        className="btn btn-outline-dark m-2"
                         onClick={() => {
                             localStorage.setItem(
                                 "tasks",
@@ -75,7 +86,7 @@ const RenderTasks = () => {
                     </button>
 
                     <button
-                        className="btn btn-info mx-2"
+                        className="btn btn-info m-2"
                         onClick={() => {
                             localStorage.setItem(
                                 "tasks",
