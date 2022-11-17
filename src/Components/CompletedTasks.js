@@ -5,15 +5,16 @@ import Alert from "react-bootstrap/Alert";
 
 const CompletedTasks = () => {
     const { tasks, setTasks } = useContext(tasksContext);
-    let pendingTasks = tasks.filter((task) => task.taskCompleted === true);
+    let completedTasks = tasks.filter((task) => task.taskCompleted === true);
+    document.title = `Completed Tasks (${completedTasks.length})`;
 
     return (
         <div className="tasks">
             <h1 className="text-center">
                 <i className="bi bi-list-task mx-2"></i>Comleted tasks
             </h1>
-            {pendingTasks.length > 0 ? (
-                pendingTasks.map((task, index) => {
+            {completedTasks.length > 0 ? (
+                completedTasks.map((task, index) => {
                     return <Task key={index} task={task} index={index} />;
                 })
             ) : (

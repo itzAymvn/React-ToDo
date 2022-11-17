@@ -25,6 +25,8 @@ function App() {
         return localData ? JSON.parse(localData) : []; // if there is data in the local storage, return it, else return an empty array
     });
 
+    document.title = `Tasks (${tasks.length})`; // set the title of the page to the number of tasks
+
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }, [tasks]); // if the tasks array changes, update the local storage
