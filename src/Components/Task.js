@@ -14,20 +14,20 @@ const Task = ({ task }) => {
         if (e.target.checked) {
             // if the checkbox is checked
             e.target.parentElement.classList.add("checked"); // add the checked class to the task
-            task.taskStatus = true; // change the task status to true
+            task.taskCompleted = true; // change the task status to true
             setTasks([...tasks]); // update the tasks array
         } else {
             // if the checkbox is unchecked
             e.target.parentElement.classList.remove("checked"); // remove the checked class from the task
-            task.taskStatus = false; // change the task status to false
+            task.taskCompleted = false; // change the task status to false
             setTasks([...tasks]); // update the tasks array
         }
     };
     return (
         <Card
-            bg={task.taskStatus ? "info" : "light"} // if the task is done, set the card background to info, else set it to light
+            bg={task.taskCompleted ? "info" : "light"} // if the task is done, set the card background to info, else set it to light
             className={
-                task.taskStatus
+                task.taskCompleted
                     ? "task checked my-3"
                     : "task my-3" /* if the task is done, add the checked class to the task, else don't */
             }>
@@ -35,20 +35,25 @@ const Task = ({ task }) => {
                 <Card.Title>{task.taskTitle}</Card.Title>
                 <Card.Text as="div">
                     <div className="d-flex justify-content-between">
-                        <div className="checkbox">
+                        <div className="checkbox d-flex justify-content-between">
                             <Form.Check
                                 type="checkbox"
-                                label={
-                                    task.taskStatus ? "Completed" : "Pending"
-                                    // if the task is done, set the checkbox label to completed, else set it to pending
-                                }
                                 checked={
-                                    task.taskStatus /* if the task is done, check the checkbox, else don't */
+                                    task.taskCompleted /* if the task is done, check the checkbox, else don't */
                                 }
                                 onChange={(e) => {
                                     handleChange(e);
                                 }}
                             />
+                            <i
+                                className="bi bi-trash mx-2"
+                                onClick={() => {
+                                    setTasks(
+                                        tasks.filter(
+                                            (t) => t.taskId !== task.taskId
+                                        )
+                                    ); // filter the tasks array to remove the task with the same id as the task that was clicked
+                                }}></i>
                         </div>
                         <div className="taskTime">{task.taskTime}</div>
                     </div>

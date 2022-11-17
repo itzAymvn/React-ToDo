@@ -5,6 +5,8 @@ import RenderTasks from "./Components/RenderTasks"; // component that renders th
 
 // BOOTSTRAP CSS
 import "bootstrap/dist/css/bootstrap.min.css";
+// BOOTSTRAP ICONS
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 // REACT BOOTSTRAP
 import Button from "react-bootstrap/Button";
@@ -25,7 +27,9 @@ function App() {
 
     return (
         <div className="container-fluid py-3">
-            <h1 className="text-center">Task Manager</h1>
+            <h1 className="text-center">
+                <i className="bi bi-kanban mx-2"></i>Task Manager
+            </h1>
             <div className="AddTask">
                 <InputGroup className="mb-3">
                     <Form.Control
@@ -34,9 +38,10 @@ function App() {
                         aria-describedby="basic-addon2"
                         onChange={(e) => {
                             setTaskToAdd({
+                                taskId: new Date().getTime(),
                                 taskTitle: e.target.value,
-                                taskTime: new Date().toLocaleString(), // get the current time
-                                taskStatus: false,
+                                taskTime: new Date().toLocaleString(),
+                                taskCompleted: false,
                             }); // set the taskToAdd state to the value of the input
                         }}
                         onKeyPress={(e) => {
@@ -56,7 +61,7 @@ function App() {
                             setTaskToAdd(""); // clear the taskToAdd state
                             document.querySelector(".AddTask input").value = "";
                         }}>
-                        Add Task
+                        <i className="bi bi-plus-lg"></i>
                     </Button>
                 </InputGroup>
             </div>
