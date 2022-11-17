@@ -16,4 +16,4 @@ This is a TodoList app built with ReactJs & React Bootstrap. It is a simple app 
 
 # License
 
-MIT License
+[![GitHub](https://img.shields.io/github/license/ItzAymvn/TodoList-react?style=for-the-badge)](./LICENSE)
