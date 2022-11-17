@@ -8,7 +8,7 @@ import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
 const RenderTasks = () => {
     const { tasks } = useContext(tasksContext); // get the tasks array from the context
-
+    document.title = `Tasks (${tasks.length})`; // set the title of the page
     return (
         <div className="tasks">
             {tasks.length > 0 ? ( // if the tasks array is not empty
