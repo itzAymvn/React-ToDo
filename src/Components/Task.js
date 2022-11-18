@@ -25,43 +25,33 @@ const Task = ({ task }) => {
     };
     return (
         <Card
-            bg={task.taskCompleted ? "info" : "light"} // if the task is done, set the card background to info, else set it to light
-            className={
-                task.taskCompleted
-                    ? "task checked my-3"
-                    : "task my-3" /* if the task is done, add the checked class to the task, else don't */
-            }>
-            <Card.Body>
+            bg={task.taskCompleted ? "info" : "light"}
+            className={task.taskCompleted ? "task checked my-3" : "task my-3"}>
+            <Card.Header as="p">
                 <Form.Check
                     type="checkbox"
-                    label={task.taskCompleted ? "Completed!" : "Pending..."} // if the task is done, set the checkbox label to Completed, else set it to Pending
-                    checked={
-                        task.taskCompleted /* if the task is done, check the checkbox, else don't */
-                    }
+                    label={task.taskCompleted ? "Completed!" : "Pending..."}
+                    checked={task.taskCompleted}
                     onChange={(e) => {
                         handleChange(e);
                     }}
-                    className="task-checkbox mb-4"
                 />
-                <hr />
-                <Card.Title>{task.taskTitle}</Card.Title>
-                <hr />
-                <Card.Text as="div" className="mt-4">
-                    <div className="d-flex justify-content-between">
-                        <button
-                            onClick={() => {
-                                // if the delete button is clicked
-                                setTasks(tasks.filter((t) => t !== task)); // remove the task from the tasks array
-                            }}
-                            className="btn btn-danger">
-                            Delete
-                        </button>
-                        <div className="taskTime align-self-end">
-                            {task.taskTime}
-                        </div>
-                    </div>
-                </Card.Text>
+            </Card.Header>
+            <Card.Body>
+                <Card.Text as="div">{task.taskTitle}</Card.Text>
             </Card.Body>
+            <Card.Footer className="text-muted">
+                <div className="d-flex justify-content-between">
+                    <i
+                        onClick={() => {
+                            setTasks(tasks.filter((t) => t !== task));
+                        }}
+                        className="bi bi-trash"></i>
+                    <div className="taskTime align-self-end">
+                        {task.taskTime}
+                    </div>
+                </div>
+            </Card.Footer>
         </Card>
     );
 };
