@@ -3,6 +3,9 @@ import tasksContext from "../Context/Tasks";
 import Task from "./Task";
 import { Link } from "react-router-dom";
 
+// sweet alert
+import Swal from "sweetalert2";
+
 // REACT BOOTSTRAP
 import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
@@ -59,8 +62,25 @@ const RenderTasks = () => {
                     <button
                         className="btn btn-danger m-2"
                         onClick={() => {
-                            localStorage.clear();
-                            window.location.reload();
+                            Swal.fire({
+                                title: "Are you sure?",
+                                text: "You won't be able to revert this!",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    localStorage.clear();
+                                    Swal.fire(
+                                        "Deleted!",
+                                        "Your tasks have been deleted.",
+                                        "success"
+                                    );
+                                    window.location.reload();
+                                }
+                            });
                         }}>
                         Delete all tasks {tasks.length}
                     </button>
@@ -68,15 +88,33 @@ const RenderTasks = () => {
                     <button
                         className="btn btn-outline-dark m-2"
                         onClick={() => {
-                            localStorage.setItem(
-                                "tasks",
-                                JSON.stringify(
-                                    tasks.filter(
-                                        (task) => task.taskCompleted === true
-                                    )
-                                )
-                            );
-                            window.location.reload();
+                            Swal.fire({
+                                title: "Are you sure you want to delete all pending tasks?",
+                                text: "You won't be able to revert this!",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    localStorage.setItem(
+                                        "tasks",
+                                        JSON.stringify(
+                                            tasks.filter(
+                                                (task) =>
+                                                    task.taskCompleted === true
+                                            )
+                                        )
+                                    );
+                                    Swal.fire(
+                                        "Deleted!",
+                                        "Your pending tasks have been deleted.",
+                                        "success"
+                                    );
+                                    window.location.reload();
+                                }
+                            });
                         }}>
                         Delete all pending tasks{" "}
                         {
@@ -88,15 +126,33 @@ const RenderTasks = () => {
                     <button
                         className="btn btn-info m-2"
                         onClick={() => {
-                            localStorage.setItem(
-                                "tasks",
-                                JSON.stringify(
-                                    tasks.filter(
-                                        (task) => task.taskCompleted === false
-                                    )
-                                )
-                            );
-                            window.location.reload();
+                            Swal.fire({
+                                title: "Are you sure you want to delete all completed tasks?",
+                                text: "You won't be able to revert this!",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    localStorage.setItem(
+                                        "tasks",
+                                        JSON.stringify(
+                                            tasks.filter(
+                                                (task) =>
+                                                    task.taskCompleted === false
+                                            )
+                                        )
+                                    );
+                                    Swal.fire(
+                                        "Deleted!",
+                                        "Your completed tasks have been deleted.",
+                                        "success"
+                                    );
+                                    window.location.reload();
+                                }
+                            });
                         }}>
                         Delete all completed tasks{" "}
                         {
