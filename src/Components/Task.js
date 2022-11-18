@@ -32,30 +32,33 @@ const Task = ({ task }) => {
                     : "task my-3" /* if the task is done, add the checked class to the task, else don't */
             }>
             <Card.Body>
+                <Form.Check
+                    type="checkbox"
+                    label={task.taskCompleted ? "Completed!" : "Pending..."} // if the task is done, set the checkbox label to Completed, else set it to Pending
+                    checked={
+                        task.taskCompleted /* if the task is done, check the checkbox, else don't */
+                    }
+                    onChange={(e) => {
+                        handleChange(e);
+                    }}
+                    className="task-checkbox mb-4"
+                />
+                <hr />
                 <Card.Title>{task.taskTitle}</Card.Title>
-                <Card.Text as="div">
+                <hr />
+                <Card.Text as="div" className="mt-4">
                     <div className="d-flex justify-content-between">
-                        <div className="checkbox d-flex justify-content-between">
-                            <Form.Check
-                                type="checkbox"
-                                checked={
-                                    task.taskCompleted /* if the task is done, check the checkbox, else don't */
-                                }
-                                onChange={(e) => {
-                                    handleChange(e);
-                                }}
-                            />
-                            <i
-                                className="bi bi-trash mx-2"
-                                onClick={() => {
-                                    setTasks(
-                                        tasks.filter(
-                                            (t) => t.taskId !== task.taskId
-                                        )
-                                    ); // filter the tasks array to remove the task with the same id as the task that was clicked
-                                }}></i>
+                        <button
+                            onClick={() => {
+                                // if the delete button is clicked
+                                setTasks(tasks.filter((t) => t !== task)); // remove the task from the tasks array
+                            }}
+                            className="btn btn-danger">
+                            Delete
+                        </button>
+                        <div className="taskTime align-self-end">
+                            {task.taskTime}
                         </div>
-                        <div className="taskTime">{task.taskTime}</div>
                     </div>
                 </Card.Text>
             </Card.Body>
