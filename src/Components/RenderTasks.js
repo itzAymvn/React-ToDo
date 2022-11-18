@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import tasksContext from "../Context/Tasks";
+import themeContext from "../Context/Theme";
 import Task from "./Task";
 import { Link } from "react-router-dom";
 
@@ -11,7 +12,7 @@ import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
 const RenderTasks = () => {
     const { tasks } = useContext(tasksContext); // get the tasks array from the context
-
+    const { theme } = useContext(themeContext); // get the theme from the context
     return (
         <div className="tasks">
             {tasks.length > 0 ? ( // if the tasks array is not empty
@@ -72,7 +73,7 @@ const RenderTasks = () => {
                                 confirmButtonText: "Yes, delete it!",
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    localStorage.clear();
+                                    localStorage.removeItem("tasks");
                                     Swal.fire(
                                         "Deleted!",
                                         "Your tasks have been deleted.",
@@ -86,7 +87,12 @@ const RenderTasks = () => {
                     </button>
 
                     <button
-                        className="btn btn-outline-dark m-2"
+                        className={
+                            "btn m-2 " +
+                            (theme === "light"
+                                ? "btn-outline-dark"
+                                : "btn-light")
+                        }
                         onClick={() => {
                             Swal.fire({
                                 title: "Are you sure you want to delete all pending tasks?",

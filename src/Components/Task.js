@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import tasksContext from "../Context/Tasks"; // context that holds the tasks
+import themeContext from "../Context/Theme";
 
 // REACT BOOTSTRAP
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 
 const Task = ({ task }) => {
+    const { theme } = useContext(themeContext); // get the theme from the context
     // task is the task object that contains the task title, time and status
     const { tasks, setTasks } = useContext(tasksContext); // get the tasks array and the setTasks function from the context
 
@@ -25,9 +27,15 @@ const Task = ({ task }) => {
     };
     return (
         <Card
-            bg={task.taskCompleted ? "info" : "light"}
+            bg={
+                task.taskCompleted
+                    ? "info"
+                    : theme === "light"
+                    ? "light"
+                    : "dark"
+            } // if the theme is dark, set the card bg to dark
             className={task.taskCompleted ? "task checked my-3" : "task my-3"}>
-            <Card.Header as="p">
+            <Card.Header as="div">
                 <Form.Check
                     type="checkbox"
                     label={task.taskCompleted ? "Completed!" : "Pending..."}
