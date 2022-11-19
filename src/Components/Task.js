@@ -27,9 +27,10 @@ const Task = ({ task }) => {
     };
     return (
         <Card
+            border={theme === "light" ? "dark" : "danger"}
             bg={
                 task.taskCompleted
-                    ? "info"
+                    ? "success"
                     : theme === "light"
                     ? "light"
                     : "dark"
@@ -49,13 +50,21 @@ const Task = ({ task }) => {
                 <Card.Text as="div">{task.taskTitle}</Card.Text>
             </Card.Body>
             <Card.Footer className="text-muted">
-                <div className="d-flex justify-content-between">
+                <div
+                    className={
+                        "d-flex justify-content-between text-" +
+                        (theme === "light" ? "dark" : "light")
+                    }>
                     <i
                         onClick={() => {
                             setTasks(tasks.filter((t) => t !== task));
                         }}
                         className="bi bi-trash"></i>
-                    <div className="taskTime align-self-end">
+                    <div
+                        className={
+                            "taskTime align-self-end text-" +
+                            (theme === "light" ? "dark" : "light")
+                        }>
                         {task.taskTime}
                     </div>
                 </div>
