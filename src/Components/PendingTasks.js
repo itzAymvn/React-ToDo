@@ -9,7 +9,7 @@ const PendingTasks = () => {
     document.title = `Pending Tasks (${pendingTasks.length})`;
 
     return (
-        <div className="tasks">
+        <div className="pending-tasks">
             <h1 className="text-center">
                 <i className="bi bi-list-task mx-2"></i>Pending tasks
             </h1>

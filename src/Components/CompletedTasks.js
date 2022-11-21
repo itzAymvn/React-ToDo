@@ -9,7 +9,7 @@ const CompletedTasks = () => {
     document.title = `Completed Tasks (${completedTasks.length})`;
 
     return (
-        <div className="tasks">
+        <div className="completed-tasks">
             <h1 className="text-center">
                 <i className="bi bi-list-task mx-2"></i>Comleted tasks
             </h1>

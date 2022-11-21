@@ -49,30 +49,35 @@ function App() {
                     "min-100 container-fluid py-3 " +
                     (theme === "light" ? "" : "bg-dark bg-gradient text-light")
                 }>
-                <div className="d-flex justify-content-around align-items-center">
-                    <Link to="/" className="text-decoration-none">
-                        <h1 className="text-center">
-                            <i className="bi bi-kanban mx-2"></i>Task Manager
-                        </h1>
-                    </Link>
-                    <Form>
-                        <Form.Check
-                            type="switch"
-                            id="custom-switch"
-                            label={
-                                theme === "light" ? (
-                                    <i className="bi bi-brightness-high"></i>
-                                ) : (
-                                    <i className="bi bi-moon-fill"></i>
-                                )
-                            }
-                            checked={theme === "light" ? false : true}
-                            onChange={() => {
-                                setTheme(theme === "light" ? "dark" : "light");
-                            }}
-                        />
-                    </Form>
-                </div>
+                <header>
+                    <div className="d-flex justify-content-around align-items-center">
+                        <Link to="/" className="text-decoration-none">
+                            <h1 className="text-center">
+                                <i className="bi bi-kanban mx-2"></i>Task
+                                Manager
+                            </h1>
+                        </Link>
+                        <Form>
+                            <Form.Check
+                                type="switch"
+                                id="custom-switch"
+                                label={
+                                    theme === "light" ? (
+                                        <i className="bi bi-brightness-high"></i>
+                                    ) : (
+                                        <i className="bi bi-moon-fill"></i>
+                                    )
+                                }
+                                checked={theme === "light" ? false : true}
+                                onChange={() => {
+                                    setTheme(
+                                        theme === "light" ? "dark" : "light"
+                                    );
+                                }}
+                            />
+                        </Form>
+                    </div>
+                </header>
                 <hr />
                 <div className="AddTask">
                     <InputGroup className="mb-3">
