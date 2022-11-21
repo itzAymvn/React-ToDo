@@ -14,9 +14,13 @@ import Badge from "react-bootstrap/Badge";
 
 const RenderTasks = () => {
     const { tasks } = useContext(tasksContext); // get the tasks array from the context
+    // sort tasks by taskTIme so that the latest tasks are on top
+    let sortedTasks = tasks.sort((a, b) => {
+        return new Date(b.taskTime) - new Date(a.taskTime);
+    });
     return (
         <div className="tasks">
-            {tasks.length > 0 ? ( // if the tasks array is not empty
+            {sortedTasks.length > 0 ? ( // if the tasks array is not empty
                 <>
                     <Alert variant="success">
                         <Alert.Heading>Tasks waiting for you!</Alert.Heading>
@@ -27,7 +31,7 @@ const RenderTasks = () => {
                         <div className="d-flex justify-content-around">
                             {
                                 // Render the number of pending tasks if there are any
-                                tasks.filter(
+                                sortedTasks.filter(
                                     (task) => task.taskCompleted === false
                                 ).length > 0 ? (
                                     <Link to="/pending">
@@ -36,7 +40,7 @@ const RenderTasks = () => {
                                             className="p-2">
                                             View{" "}
                                             {
-                                                tasks.filter(
+                                                sortedTasks.filter(
                                                     (task) =>
                                                         task.taskCompleted ===
                                                         false
@@ -49,7 +53,7 @@ const RenderTasks = () => {
                             }
                             {
                                 // Render the number of completed tasks if there are any
-                                tasks.filter(
+                                sortedTasks.filter(
                                     (task) => task.taskCompleted === true
                                 ).length > 0 ? (
                                     <Link to="/completed">
@@ -76,8 +80,8 @@ const RenderTasks = () => {
                     </h1>
                     <hr />
 
-                    {tasks.length > 0 && // This will render the tasks if the tasks array is not empty
-                        tasks.map((task, index) => {
+                    {sortedTasks.length > 0 && // This will render the tasks if the tasks array is not empty
+                        sortedTasks.map((task, index) => {
                             return (
                                 <Task key={index} task={task} index={index} />
                             );

@@ -5,7 +5,13 @@ import Alert from "react-bootstrap/Alert";
 
 const PendingTasks = () => {
     const { tasks, setTasks } = useContext(tasksContext);
-    let pendingTasks = tasks.filter((task) => task.taskCompleted === false);
+    // sort tasks by taskTIme so that the latest tasks are on top
+    let sortedTasks = tasks.sort((a, b) => {
+        return new Date(b.taskTime) - new Date(a.taskTime);
+    });
+    let pendingTasks = sortedTasks.filter(
+        (task) => task.taskCompleted === false
+    );
     document.title = `Pending Tasks (${pendingTasks.length})`;
 
     return (

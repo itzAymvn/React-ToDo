@@ -1,4 +1,6 @@
-import React, { useContext, useState } from "react";
+import "./Task.css";
+
+import React, { useContext, useState, useEffect } from "react";
 import tasksContext from "../Context/Tasks"; // context that holds the tasks
 import themeContext from "../Context/Theme";
 
@@ -64,6 +66,7 @@ const Task = ({ task }) => {
     const handleChange = (e) => {
         if (e.target.checked) {
             e.target.parentElement.classList.add("checked"); // add the checked class to the task
+            e.target.parentElement.classList.add("visible"); // add the checked class to the task
             task.taskCompleted = true; // change the task status to true
             setTasks([...tasks]); // update the tasks array
         } else {
@@ -72,6 +75,29 @@ const Task = ({ task }) => {
             setTasks([...tasks]); // update the tasks array
         }
     };
+
+    useEffect(() => {
+        // Immediately animate the tasks that are in the viewport when the page loads
+        document.querySelectorAll(".task").forEach((task) => {
+            if (task.getBoundingClientRect().top < window.innerHeight) {
+                task.classList.add("visible"); // add the visible class to the task
+            }
+        });
+    });
+
+    useEffect(() => {
+        // Animate the tasks as the user scrolls the page
+        window.addEventListener("scroll", () => {
+            document.querySelectorAll(".task").forEach((task) => {
+                if (task.getBoundingClientRect().top < window.innerHeight) {
+                    task.classList.add("visible"); // add the visible class to the task
+                } else {
+                    task.classList.remove("visible"); // remove the visible class from the task
+                }
+            });
+        });
+    }, []);
+
     return (
         <Card
             border={theme === "light" ? "dark" : "danger"} // change the border color according to the theme

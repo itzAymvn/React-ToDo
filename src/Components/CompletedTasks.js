@@ -5,7 +5,13 @@ import Alert from "react-bootstrap/Alert";
 
 const CompletedTasks = () => {
     const { tasks, setTasks } = useContext(tasksContext);
-    let completedTasks = tasks.filter((task) => task.taskCompleted === true);
+    // sort tasks by taskTIme so that the latest tasks are on top
+    let sortedTasks = tasks.sort((a, b) => {
+        return new Date(b.taskTime) - new Date(a.taskTime);
+    });
+    let completedTasks = sortedTasks.filter(
+        (task) => task.taskCompleted === true
+    );
     document.title = `Completed Tasks (${completedTasks.length})`;
 
     return (
