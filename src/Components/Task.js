@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import tasksContext from "../Context/Tasks"; // context that holds the tasks
 import themeContext from "../Context/Theme";
 
@@ -6,9 +6,59 @@ import themeContext from "../Context/Theme";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 
+// date difference function
+const dateDifference = (date) => {
+    if (new Date().getTime() - new Date(date).getTime() < 60000)
+        // if the difference is less than a minute
+        return "Just now";
+    else if (new Date().getTime() - new Date(date).getTime() < 3600000)
+        // if the difference is less than an hour
+        return (
+            Math.floor(
+                (new Date().getTime() - new Date(date).getTime()) / 60000
+            ) + "m ago"
+        );
+    else if (new Date().getTime() - new Date(date).getTime() < 86400000)
+        // if the difference is less than a day
+        return (
+            // Hours and minutes
+            Math.floor(
+                (new Date().getTime() - new Date(date).getTime()) / 3600000
+            ) +
+            "h, " +
+            Math.floor(
+                ((new Date().getTime() - new Date(date).getTime()) % 3600000) /
+                    60000
+            ) +
+            "m ago"
+        );
+    // if the difference is more than a day
+    else
+        return (
+            // Days, hours and minutes
+            Math.floor(
+                (new Date().getTime() - new Date(date).getTime()) / 86400000
+            ) +
+            "d, " +
+            Math.floor(
+                ((new Date().getTime() - new Date(date).getTime()) % 86400000) /
+                    3600000
+            ) +
+            "h, " +
+            Math.floor(
+                (((new Date().getTime() - new Date(date).getTime()) %
+                    86400000) %
+                    3600000) /
+                    60000
+            ) +
+            "m ago"
+        );
+};
+
 const Task = ({ task }) => {
     const { theme } = useContext(themeContext); // get the theme from the context
     const { tasks, setTasks } = useContext(tasksContext); // get the tasks array and the setTasks function from the context
+    const [showDiff, setShowDiff] = useState(false);
 
     // function that handles the task status change
     const handleChange = (e) => {
@@ -62,7 +112,15 @@ const Task = ({ task }) => {
                             "taskTime align-self-end text-" +
                             (theme === "light" ? "dark" : "light") // change the text color according to the theme
                         }>
-                        {task.taskTime}
+                        {showDiff
+                            ? dateDifference(task.taskTime)
+                            : task.taskTime}
+
+                        <i
+                            onClick={() => {
+                                setShowDiff(!showDiff);
+                            }}
+                            className="bi bi-clock-history mx-2"></i>
                     </div>
                 </div>
             </Card.Footer>
