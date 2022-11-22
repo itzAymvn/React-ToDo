@@ -8,7 +8,7 @@ import themeContext from "../Context/Theme";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 
-// date difference function
+// Function that calculates the time difference between the current time and the task time and returns a string
 const dateDifference = (date) => {
     if (new Date().getTime() - new Date(date).getTime() < 60000)
         // if the difference is less than a minute
@@ -60,7 +60,7 @@ const dateDifference = (date) => {
 const Task = ({ task }) => {
     const { theme } = useContext(themeContext); // get the theme from the context
     const { tasks, setTasks } = useContext(tasksContext); // get the tasks array and the setTasks function from the context
-    const [showDiff, setShowDiff] = useState(false);
+    const [showDiff, setShowDiff] = useState(true);
 
     // function that handles the task status change
     const handleChange = (e) => {
@@ -117,6 +117,10 @@ const Task = ({ task }) => {
                     onChange={(e) => {
                         handleChange(e);
                     }}
+                    title={
+                        "Click the checkbox to mark this task as " +
+                        (task.taskCompleted ? "pending" : "completed")
+                    }
                 />
             </Card.Header>
             <Card.Body>
@@ -132,6 +136,7 @@ const Task = ({ task }) => {
                         onClick={() => {
                             setTasks(tasks.filter((t) => t !== task));
                         }}
+                        title="Delete this task"
                         className="bi bi-trash"></i>
                     <div
                         className={
@@ -146,6 +151,7 @@ const Task = ({ task }) => {
                             onClick={() => {
                                 setShowDiff(!showDiff);
                             }}
+                            title="Click to see the exact time"
                             className="bi bi-clock-history mx-2"></i>
                     </div>
                 </div>

@@ -22,15 +22,27 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 function App() {
+    // STATES BEGIN //
+
+    const [input, setInput] = useState(""); // input state
+
     const [taskToAdd, setTaskToAdd] = useState(""); // state that holds the task to add (directly from the input)
+
     const [tasks, setTasks] = useState(() => {
         const localData = localStorage.getItem("tasks");
         return localData ? JSON.parse(localData) : []; // if there is data in the local storage, return it, else return an empty array
     });
+
     const [theme, setTheme] = useState(() => {
         const localTheme = localStorage.getItem("theme");
         return localTheme ? localTheme : "light";
     }); // state that holds the theme
+
+    // STATES END //
+
+    document.title = `Tasks (${tasks.length})`; // set the title of the page to the number of tasks
+
+    // USE EFFECTS BEGIN
 
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -40,7 +52,18 @@ function App() {
         localStorage.setItem("theme", theme);
     }, [theme]); // if the theme changes, update the local storage
 
-    document.title = `Tasks (${tasks.length})`; // set the title of the page to the number of tasks
+    // USE EFFECTS END
+
+    // Handle the click and enter events
+    function handleClickAndEnter() {
+        if (taskToAdd) {
+            setTasks([...tasks, taskToAdd]); // add the task to the tasks array
+            setTaskToAdd(""); // clear the taskToAdd state
+            setInput(""); // clear the input
+        } else {
+            alert("Please enter a task!");
+        }
+    }
 
     return (
         <themeContext.Provider value={{ theme, setTheme }}>
@@ -82,23 +105,26 @@ function App() {
                 <div className="AddTask">
                     <InputGroup className="mb-3">
                         <Form.Control
-                            placeholder="Type your todo task here..."
-                            aria-label="Recipient's username"
+                            placeholder="Add a task..."
+                            aria-label="Task"
                             aria-describedby="basic-addon2"
+                            value={input}
+                            //
+                            // when the input changes, update the taskToAdd state
                             onChange={(e) => {
+                                setInput(e.target.value);
                                 setTaskToAdd({
                                     taskId: new Date().getTime(),
-                                    taskTitle: e.target.value,
+                                    taskTitle: input,
                                     taskTime: new Date().toLocaleString(),
                                     taskCompleted: false,
                                 }); // set the taskToAdd state to the value of the input
                             }}
+                            //
+                            // when the user presses enter
                             onKeyPress={(e) => {
                                 if (e.key === "Enter") {
-                                    // if the user presses enter
-                                    setTasks([...tasks, taskToAdd]); // add the task to the tasks array
-                                    setTaskToAdd(""); // clear the taskToAdd state
-                                    e.target.value = ""; // clear the input
+                                    handleClickAndEnter();
                                 }
                             }}
                         />
@@ -109,11 +135,10 @@ function App() {
                                     : "outline-light"
                             }
                             id="button-addon2"
+                            //
+                            // when the user clicks the add button
                             onClick={() => {
-                                setTasks([...tasks, taskToAdd]); // add the task to the tasks array
-                                setTaskToAdd(""); // clear the taskToAdd state
-                                document.querySelector(".AddTask input").value =
-                                    "";
+                                handleClickAndEnter();
                             }}>
                             <i className="bi bi-plus-lg"></i>
                         </Button>
