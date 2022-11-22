@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import tasksContext from "../Context/Tasks";
 
 // Components
 import Task from "./Task"; // Task component
 import DeleteButtons from "./DeleteButtons"; // DeleteButtons component
+import tasksContext from "../Context/Tasks";
 
 // React Router DOM
 import { Link } from "react-router-dom";
@@ -13,7 +13,9 @@ import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
 
 const RenderTasks = () => {
-    const { tasks } = useContext(tasksContext); // get the tasks array from the context
+    // get the tasks array from the context
+    const { tasks } = useContext(tasksContext);
+
     // sort tasks by taskTIme so that the latest tasks are on top
     let sortedTasks = tasks.sort((a, b) => {
         return new Date(b.taskTime) - new Date(a.taskTime);

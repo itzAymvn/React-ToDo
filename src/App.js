@@ -2,6 +2,9 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
+// import Swal;
+import Swal from "sweetalert2";
+
 // context
 import tasksContext from "./Context/Tasks"; // context that hold the tasks array
 import themeContext from "./Context/Theme"; // context that hold the theme
@@ -22,27 +25,18 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 function App() {
-    // STATES BEGIN //
-
     const [input, setInput] = useState(""); // input state
-
     const [taskToAdd, setTaskToAdd] = useState(""); // state that holds the task to add (directly from the input)
-
     const [tasks, setTasks] = useState(() => {
         const localData = localStorage.getItem("tasks");
         return localData ? JSON.parse(localData) : []; // if there is data in the local storage, return it, else return an empty array
     });
-
     const [theme, setTheme] = useState(() => {
         const localTheme = localStorage.getItem("theme");
         return localTheme ? localTheme : "light";
     }); // state that holds the theme
 
-    // STATES END //
-
     document.title = `Tasks (${tasks.length})`; // set the title of the page to the number of tasks
-
-    // USE EFFECTS BEGIN
 
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -52,16 +46,19 @@ function App() {
         localStorage.setItem("theme", theme);
     }, [theme]); // if the theme changes, update the local storage
 
-    // USE EFFECTS END
-
     // Handle the click and enter events
     function handleClickAndEnter() {
-        if (taskToAdd) {
+        // if the task exists and its title is not empty
+        if (taskToAdd && taskToAdd.taskTitle.replace(/\s/g, "").length > 0) {
             setTasks([...tasks, taskToAdd]); // add the task to the tasks array
             setTaskToAdd(""); // clear the taskToAdd state
             setInput(""); // clear the input
         } else {
-            alert("Please enter a task!");
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please enter a valid task!",
+            });
         }
     }
 
@@ -115,7 +112,7 @@ function App() {
                                 setInput(e.target.value);
                                 setTaskToAdd({
                                     taskId: new Date().getTime(),
-                                    taskTitle: input,
+                                    taskTitle: e.target.value.trim(),
                                     taskTime: new Date().toLocaleString(),
                                     taskCompleted: false,
                                 }); // set the taskToAdd state to the value of the input
@@ -123,9 +120,7 @@ function App() {
                             //
                             // when the user presses enter
                             onKeyPress={(e) => {
-                                if (e.key === "Enter") {
-                                    handleClickAndEnter();
-                                }
+                                e.key === "Enter" && handleClickAndEnter();
                             }}
                         />
                         <Button
@@ -137,9 +132,7 @@ function App() {
                             id="button-addon2"
                             //
                             // when the user clicks the add button
-                            onClick={() => {
-                                handleClickAndEnter();
-                            }}>
+                            onClick={() => handleClickAndEnter()}>
                             <i className="bi bi-plus-lg"></i>
                         </Button>
                     </InputGroup>

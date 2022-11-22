@@ -64,16 +64,8 @@ const Task = ({ task }) => {
 
     // function that handles the task status change
     const handleChange = (e) => {
-        if (e.target.checked) {
-            e.target.parentElement.classList.add("checked"); // add the checked class to the task
-            e.target.parentElement.classList.add("visible"); // add the checked class to the task
-            task.taskCompleted = true; // change the task status to true
-            setTasks([...tasks]); // update the tasks array
-        } else {
-            e.target.parentElement.classList.remove("checked"); // remove the checked class from the task
-            task.taskCompleted = false; // change the task status to false
-            setTasks([...tasks]); // update the tasks array
-        }
+        task.taskCompleted = e.target.checked; // change the task status
+        setTasks([...tasks]); // update the tasks array
     };
 
     useEffect(() => {

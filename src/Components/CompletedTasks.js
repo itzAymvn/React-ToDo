@@ -1,14 +1,24 @@
+// React & Hooks
 import React, { useContext } from "react";
+
+// Context
 import tasksContext from "../Context/Tasks";
+
+// Components
 import Task from "./Task";
+
+// React Bootstrap
 import Alert from "react-bootstrap/Alert";
 
 const CompletedTasks = () => {
     const { tasks, setTasks } = useContext(tasksContext);
-    // sort tasks by taskTIme so that the latest tasks are on top
+
+    // Sorting the tasks by creation date
     let sortedTasks = tasks.sort((a, b) => {
         return new Date(b.taskTime) - new Date(a.taskTime);
     });
+
+    // Filtering the tasks to show only the completed ones
     let completedTasks = sortedTasks.filter(
         (task) => task.taskCompleted === true
     );
