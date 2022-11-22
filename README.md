@@ -4,22 +4,29 @@ This is a TodoList app built with ReactJs & React Bootstrap. It is a simple app 
 
 # How to run
 
+_Make sure you have NodeJs installed on your machine, if not you can download it from [here](https://nodejs.org/en/download/)_
+
 1. Clone the repo
 2. Run `npm install`
 3. Run `npm start`
 4. Open `http://localhost:3000` in your browser
 
-# How to build
+# How to build for production
 
 1. Run `npm run build`
 2. The build files will be in the `build` folder
 
-# To be added
+# Features
 
--   [x] Added a delete button to each task.
--   [x] Added a delete completed button.
--   [x] Added a delete pending button.
--   [x] Added possibility to view Pending tasks or Completed tasks separately.
+-   Add a task
+-   Mark a task as complete
+-   Mark a task as pending
+-   Delete a task
+-   Delete all pending tasks
+-   Delete all completed tasks
+-   Empty the list
+-   Supports local storage
+-   Supports dark mode
 
 # License
 
