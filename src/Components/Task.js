@@ -100,15 +100,13 @@ const Task = ({ task }) => {
                     ? "light"
                     : "dark"
             } // change the background color according to the theme and the task status
-            className={task.taskCompleted ? "task checked my-3" : "task my-3"}>
+            className={"task my-3 " + (task.taskCompleted && "text-white")}>
             <Card.Header as="div">
                 <Form.Check
                     type="checkbox"
                     label={task.taskCompleted ? "Completed!" : "Pending..."} // change the label according to the task status
                     checked={task.taskCompleted}
-                    onChange={(e) => {
-                        handleChange(e);
-                    }}
+                    onChange={(e) => handleChange(e)}
                     title={
                         "Click the checkbox to mark this task as " +
                         (task.taskCompleted ? "pending" : "completed")
@@ -118,34 +116,17 @@ const Task = ({ task }) => {
             <Card.Body>
                 <Card.Text as="div">{task.taskTitle}</Card.Text>
             </Card.Body>
-            <Card.Footer className="text-muted">
-                <div
-                    className={
-                        "d-flex justify-content-between text-" +
-                        (theme === "light" ? "dark" : "light") // change the text color according to the theme
-                    }>
+            <Card.Footer className={"d-flex justify-content-between"}>
+                <i
+                    onClick={() => setTasks(tasks.filter((t) => t !== task))}
+                    title="Delete this task"
+                    className="bi bi-trash"></i>
+                <div className={"taskTime align-self-end"}>
+                    {showDiff ? dateDifference(task.taskTime) : task.taskTime}
                     <i
-                        onClick={() => {
-                            setTasks(tasks.filter((t) => t !== task));
-                        }}
-                        title="Delete this task"
-                        className="bi bi-trash"></i>
-                    <div
-                        className={
-                            "taskTime align-self-end text-" +
-                            (theme === "light" ? "dark" : "light") // change the text color according to the theme
-                        }>
-                        {showDiff
-                            ? dateDifference(task.taskTime)
-                            : task.taskTime}
-
-                        <i
-                            onClick={() => {
-                                setShowDiff(!showDiff);
-                            }}
-                            title="Click to see the exact time"
-                            className="bi bi-clock-history mx-2"></i>
-                    </div>
+                        onClick={() => setShowDiff(!showDiff)}
+                        title="Click to see the exact time"
+                        className="bi bi-clock-history mx-2"></i>
                 </div>
             </Card.Footer>
         </Card>

@@ -1,11 +1,13 @@
 import "./App.css";
+
+// React & React Router & Hooks
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
-// import Swal;
+// Swal (SweetAlert2)
 import Swal from "sweetalert2";
 
-// context
+// Context
 import tasksContext from "./Context/Tasks"; // context that hold the tasks array
 import themeContext from "./Context/Theme"; // context that hold the theme
 
@@ -14,27 +16,24 @@ import RenderTasks from "./Components/RenderTasks"; // component that renders th
 import PendingTasks from "./Components/PendingTasks"; // component that renders the pending tasks
 import CompletedTasks from "./Components/CompletedTasks"; // component that renders the completed tasks
 
-// BOOTSTRAP CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-// BOOTSTRAP ICONS
-import "bootstrap-icons/font/bootstrap-icons.css";
-
-// REACT BOOTSTRAP
+// React Bootstrap & CSS & Icons
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
-    const [input, setInput] = useState(""); // input state
-    const [taskToAdd, setTaskToAdd] = useState(""); // state that holds the task to add (directly from the input)
+    const [input, setInput] = useState(""); // State that holds the input value
+    const [taskToAdd, setTaskToAdd] = useState(""); // state that holds the task to add= (ID, Content, Creation time & Status)
     const [tasks, setTasks] = useState(() => {
         const localData = localStorage.getItem("tasks");
-        return localData ? JSON.parse(localData) : []; // if there is data in the local storage, return it, else return an empty array
-    });
+        return localData ? JSON.parse(localData) : [];
+    }); // state that holds the tasks array from the local storage (if exists), otherwise an empty array
     const [theme, setTheme] = useState(() => {
         const localTheme = localStorage.getItem("theme");
         return localTheme ? localTheme : "light";
-    }); // state that holds the theme
+    }); // state that holds the theme from the local storage (if exists), otherwise "light"
 
     document.title = `Tasks (${tasks.length})`; // set the title of the page to the number of tasks
 
@@ -54,6 +53,7 @@ function App() {
             setTaskToAdd(""); // clear the taskToAdd state
             setInput(""); // clear the input
         } else {
+            // if the task doesn't exist or its title is empty
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -63,6 +63,9 @@ function App() {
     }
 
     return (
+        /*
+        Wrap the app with the theme context
+        */
         <themeContext.Provider value={{ theme, setTheme }}>
             <div
                 className={
@@ -137,6 +140,10 @@ function App() {
                         </Button>
                     </InputGroup>
                 </div>
+                {
+                    //
+                    /* Wrap the tasks with the tasks context */
+                }
                 <tasksContext.Provider value={{ tasks, setTasks }}>
                     <Routes>
                         <Route path="/" element={<RenderTasks />} />

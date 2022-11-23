@@ -13,7 +13,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Swal from "sweetalert2";
 
 const DeleteButtons = () => {
-    const { tasks } = useContext(tasksContext); // get the tasks array from the context
+    const { tasks, setTasks } = useContext(tasksContext); // get the tasks array from the context
     const { theme } = useContext(themeContext); // get the theme from the context
 
     return (
@@ -48,7 +48,8 @@ const DeleteButtons = () => {
                                         "Your tasks have been deleted.",
                                         "success"
                                     );
-                                    window.location.reload();
+                                    // empty the tasks array
+                                    setTasks([]);
                                 }
                             });
                         }}>
@@ -88,7 +89,14 @@ const DeleteButtons = () => {
                                             "Your pending tasks have been deleted.",
                                             "success"
                                         );
-                                        window.location.reload();
+
+                                        // Remove all pending tasks from the tasks array
+                                        setTasks(
+                                            tasks.filter(
+                                                (task) =>
+                                                    task.taskCompleted === true
+                                            )
+                                        );
                                     }
                                 });
                             }}>
@@ -136,7 +144,13 @@ const DeleteButtons = () => {
                                             "Your completed tasks have been deleted.",
                                             "success"
                                         );
-                                        window.location.reload();
+                                        // Remove all completed tasks from the tasks array
+                                        setTasks(
+                                            tasks.filter(
+                                                (task) =>
+                                                    task.taskCompleted === false
+                                            )
+                                        );
                                     }
                                 });
                             }}>
