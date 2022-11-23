@@ -7,6 +7,11 @@ import themeContext from "../Context/Theme";
 // REACT BOOTSTRAP
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
+
+// Swal
+import Swal from "sweetalert2";
 
 // Function that calculates the time difference between the current time and the task time and returns a string
 const dateDifference = (date) => {
@@ -58,14 +63,35 @@ const dateDifference = (date) => {
 };
 
 const Task = ({ task }) => {
+    const [taskTitle, setTaskTitle] = useState(task.taskTitle); // state that holds the new task content
     const { theme } = useContext(themeContext); // get the theme from the context
     const { tasks, setTasks } = useContext(tasksContext); // get the tasks array and the setTasks function from the context
     const [showDiff, setShowDiff] = useState(true);
+    const [editMode, setEditMode] = useState(false);
 
     // function that handles the task status change
     const handleChange = (e) => {
         task.taskCompleted = e.target.checked; // change the task status
         setTasks([...tasks]); // update the tasks array
+    };
+
+    // function to edit the task
+    const editTask = (taskId) => {
+        if (taskTitle.replace(/\s/g, "").length > 0) {
+            setTasks(
+                tasks.map((t) => {
+                    if (t.taskId === taskId) t.taskTitle = taskTitle;
+                    return t;
+                })
+            );
+            setEditMode(false);
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Task content can't be empty!",
+            });
+        }
     };
 
     useEffect(() => {
@@ -114,18 +140,53 @@ const Task = ({ task }) => {
                 />
             </Card.Header>
             <Card.Body>
-                <Card.Text as="div">{task.taskTitle}</Card.Text>
+                {!editMode ? (
+                    <Card.Text as="div">{task.taskTitle}</Card.Text>
+                ) : (
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            value={taskTitle}
+                            onChange={
+                                (e) => setTaskTitle(e.target.value) // update the new task content
+                            }
+                            onKeyPress={(e) => {
+                                if (e.key === "Enter") editTask(task.taskId);
+                            }}
+                        />
+                        <Button
+                            title="Edit task"
+                            onClick={() => editTask(task.taskId)}
+                            variant={
+                                theme === "light"
+                                    ? "outline-dark"
+                                    : "outline-light"
+                            }>
+                            <i className="bi bi-pencil"></i>
+                        </Button>
+                    </InputGroup>
+                )}
             </Card.Body>
             <Card.Footer className={"d-flex justify-content-between"}>
-                <i
-                    onClick={() => setTasks(tasks.filter((t) => t !== task))}
-                    title="Delete this task"
-                    className="bi bi-trash"></i>
+                <div className="icons d-flex gap-1">
+                    <i
+                        onClick={() =>
+                            setTasks(tasks.filter((t) => t !== task))
+                        }
+                        title="Delete task"
+                        className="bi bi-trash"></i>
+                    <i
+                        title="Edit task"
+                        onClick={() => setEditMode(!editMode)}
+                        className="bi bi-pencil"></i>
+                </div>
                 <div className={"taskTime align-self-end"}>
                     {showDiff ? dateDifference(task.taskTime) : task.taskTime}
                     <i
                         onClick={() => setShowDiff(!showDiff)}
-                        title="Click to see the exact time"
+                        title={
+                            "Click to see " +
+                            (showDiff ? "creation time" : "task age")
+                        }
                         className="bi bi-clock-history mx-2"></i>
                 </div>
             </Card.Footer>

@@ -18,10 +18,9 @@ _Make sure you have NodeJs installed on your machine, if not you can download it
 
 # Features
 
--   Add a task
+-   Add, Edit or Delete a task
 -   Mark a task as complete
 -   Mark a task as pending
--   Delete a task
 -   Delete all pending tasks
 -   Delete all completed tasks
 -   Empty the list
