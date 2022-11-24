@@ -71,13 +71,18 @@ const RenderTasks = () => {
                         <i className="bi bi-list-task mx-2"></i>Your tasks
                     </h1>
                     <hr />
-
-                    {sortedTasks.length > 0 && // This will render the tasks if the tasks array is not empty
-                        sortedTasks.map((task, index) => {
-                            return (
-                                <Task key={index} task={task} index={index} />
-                            );
-                        })}
+                    <div className="allTasks">
+                        {sortedTasks.length > 0 && // This will render the tasks if the tasks array is not empty
+                            sortedTasks.map((task, index) => {
+                                return (
+                                    <Task
+                                        key={index}
+                                        task={task}
+                                        index={index}
+                                    />
+                                );
+                            })}
+                    </div>
                     <DeleteButtons />
                 </>
             ) : (

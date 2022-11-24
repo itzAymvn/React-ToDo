@@ -11,10 +11,11 @@ import Swal from "sweetalert2";
 import tasksContext from "./Context/Tasks"; // context that hold the tasks array
 import themeContext from "./Context/Theme"; // context that hold the theme
 
-// Component that renders the tasks
+// Component
 import RenderTasks from "./Components/RenderTasks"; // component that renders the tasks
 import PendingTasks from "./Components/PendingTasks"; // component that renders the pending tasks
 import CompletedTasks from "./Components/CompletedTasks"; // component that renders the completed tasks
+import ScrollTopBtn from "./Components/ScrollTopBtn";
 
 // React Bootstrap & CSS & Icons
 import Button from "react-bootstrap/Button";
@@ -24,6 +25,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
+    const [isScrolled, setIsScrolled] = useState(false); // state that holds the scroll status
     const [input, setInput] = useState(""); // State that holds the input value
     const [taskToAdd, setTaskToAdd] = useState(""); // state that holds the task to add= (ID, Content, Creation time & Status)
     const [tasks, setTasks] = useState(() => {
@@ -61,6 +63,15 @@ function App() {
             });
         }
     }
+
+    // Handle the scroll event
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 10) {
+            setIsScrolled(true);
+        } else {
+            setIsScrolled(false);
+        }
+    });
 
     return (
         /*
@@ -151,6 +162,11 @@ function App() {
                         <Route path="/completed" element={<CompletedTasks />} />
                     </Routes>
                 </tasksContext.Provider>
+                {isScrolled ? (
+                    <ScrollTopBtn scrolled={true} />
+                ) : (
+                    <ScrollTopBtn scrolled={false} />
+                )}
             </div>
         </themeContext.Provider>
     );
