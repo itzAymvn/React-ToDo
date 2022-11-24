@@ -170,7 +170,16 @@ const Task = ({ task }) => {
                 <div className="icons d-flex gap-1">
                     <i
                         onClick={() =>
-                            setTasks(tasks.filter((t) => t !== task))
+                            Swal.fire({
+                                title: "Are you sure you want to delete this task?",
+                                showDenyButton: true,
+                                confirmButtonText: `Delete`,
+                                denyButtonText: `Cancel`,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    setTasks(tasks.filter((t) => t !== task));
+                                }
+                            })
                         }
                         title="Delete task"
                         className="bi bi-trash"></i>
