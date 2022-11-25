@@ -188,7 +188,11 @@ const Task = ({ task }) => {
                         onClick={() => setEditMode(!editMode)}
                         className="bi bi-pencil"></i>
                 </div>
-                <div className={"taskTime align-self-end"}>
+                <div
+                    className={"taskTime align-self-end"}
+                    title={
+                        "This task was created " + dateDifference(task.taskTime)
+                    }>
                     {showDiff ? dateDifference(task.taskTime) : task.taskTime}
                     <i
                         onClick={() => setShowDiff(!showDiff)}

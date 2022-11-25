@@ -5,6 +5,7 @@ import React, { useContext } from "react";
 import Task from "./Task"; // Component that renders each task
 import DeleteButtons from "./DeleteButtons"; // Component that renders the delete buttons
 import tasksContext from "../Context/Tasks"; // Component that holds the context
+import themeContext from "../Context/Theme";
 
 // React Router DOM
 import { Link } from "react-router-dom";
@@ -16,6 +17,7 @@ import Badge from "react-bootstrap/Badge";
 const RenderTasks = () => {
     // get the tasks array from the context
     const { tasks } = useContext(tasksContext);
+    const { theme } = useContext(themeContext);
 
     // sort tasks by creation time, so that the latest tasks are on top
     let sortedTasks = tasks.sort((a, b) => {
@@ -40,15 +42,31 @@ const RenderTasks = () => {
                         <Alert.Heading>Tasks waiting for you!</Alert.Heading>
                         <p>You have {tasks.length} tasks to do.</p>
                     </Alert>
-
+                    <hr />
+                    <h1 className="text-center">
+                        <i className="bi bi-funnel-fill mx-2"></i>TASKS SORTED
+                        BY STATUS
+                    </h1>
+                    <hr />
                     <Alert
-                        variant="warning"
+                        variant="secondary"
                         className="d-flex justify-content-around">
                         {
                             // Render the number of pending tasks if there are any
                             pendingTasks.length > 0 ? (
-                                <Link to="/pending">
-                                    <Badge bg="light text-dark" className="p-2">
+                                <Link
+                                    to="/pending"
+                                    title="Click to see pending tasks">
+                                    <Badge
+                                        bg={
+                                            theme === "light" ? "dark" : "light"
+                                        }
+                                        className={
+                                            "py-2 " +
+                                            (theme === "light"
+                                                ? "text-light"
+                                                : "text-dark")
+                                        }>
                                         View {pendingTasks.length} Pending
                                     </Badge>
                                 </Link>
@@ -57,7 +75,9 @@ const RenderTasks = () => {
                         {
                             // Render the number of completed tasks if there are any
                             completedTasks.length > 0 ? (
-                                <Link to="/completed">
+                                <Link
+                                    to="/completed"
+                                    title="Click to see completed tasks">
                                     <Badge bg="success" className="p-2">
                                         View {completedTasks.length} Completed
                                     </Badge>
@@ -68,7 +88,7 @@ const RenderTasks = () => {
 
                     <hr />
                     <h1 className="text-center">
-                        <i className="bi bi-list-task mx-2"></i>Your tasks
+                        <i className="bi bi-list-task mx-2"></i>ALL TASKS
                     </h1>
                     <hr />
                     <div className="allTasks">

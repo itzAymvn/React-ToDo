@@ -91,7 +91,7 @@ function App() {
                                 Manager
                             </h1>
                         </Link>
-                        <Form>
+                        <Form title="Click to toggle between dark and light mode!">
                             <Form.Check
                                 type="switch"
                                 id="custom-switch"
@@ -138,6 +138,7 @@ function App() {
                             }}
                         />
                         <Button
+                            title="Click to add the task!"
                             variant={
                                 theme === "light"
                                     ? "outline-dark"
