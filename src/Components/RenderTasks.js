@@ -35,58 +35,60 @@ const RenderTasks = () => {
     );
 
     return (
-        <div className="tasks">
+        <div className="tasks container-fluid">
             {sortedTasks.length > 0 ? ( // if the tasks array is not empty
                 <>
-                    <Alert variant="success">
-                        <Alert.Heading>Tasks waiting for you!</Alert.Heading>
-                        <p>You have {tasks.length} tasks to do.</p>
-                    </Alert>
                     <hr />
-                    <h1 className="text-center">
-                        <i className="bi bi-funnel-fill mx-2"></i>TASKS SORTED
-                        BY STATUS
-                    </h1>
+                    <div className="row gap-4">
+                        <Alert variant="success" className="col">
+                            <Alert.Heading>
+                                Tasks waiting for you!
+                            </Alert.Heading>
+                            <p>You have {tasks.length} tasks to do.</p>
+                        </Alert>
+                        <Alert
+                            variant="secondary"
+                            className="d-flex justify-content-around align-items-center flex-column col">
+                            {
+                                // Render the number of pending tasks if there are any
+                                pendingTasks.length > 0 ? (
+                                    <Link
+                                        to="/pending"
+                                        title="Click to see pending tasks">
+                                        <Badge
+                                            bg={
+                                                theme === "light"
+                                                    ? "dark"
+                                                    : "light"
+                                            }
+                                            className={
+                                                "py-2 " +
+                                                (theme === "light"
+                                                    ? "text-light"
+                                                    : "text-dark")
+                                            }>
+                                            View {pendingTasks.length} Pending
+                                        </Badge>
+                                    </Link>
+                                ) : null
+                            }
+                            {
+                                // Render the number of completed tasks if there are any
+                                completedTasks.length > 0 ? (
+                                    <Link
+                                        to="/completed"
+                                        title="Click to see completed tasks">
+                                        <Badge bg="success" className="p-2">
+                                            View {completedTasks.length}{" "}
+                                            Completed
+                                        </Badge>
+                                    </Link>
+                                ) : null
+                            }
+                        </Alert>
+                    </div>
                     <hr />
-                    <Alert
-                        variant="secondary"
-                        className="d-flex justify-content-around">
-                        {
-                            // Render the number of pending tasks if there are any
-                            pendingTasks.length > 0 ? (
-                                <Link
-                                    to="/pending"
-                                    title="Click to see pending tasks">
-                                    <Badge
-                                        bg={
-                                            theme === "light" ? "dark" : "light"
-                                        }
-                                        className={
-                                            "py-2 " +
-                                            (theme === "light"
-                                                ? "text-light"
-                                                : "text-dark")
-                                        }>
-                                        View {pendingTasks.length} Pending
-                                    </Badge>
-                                </Link>
-                            ) : null
-                        }
-                        {
-                            // Render the number of completed tasks if there are any
-                            completedTasks.length > 0 ? (
-                                <Link
-                                    to="/completed"
-                                    title="Click to see completed tasks">
-                                    <Badge bg="success" className="p-2">
-                                        View {completedTasks.length} Completed
-                                    </Badge>
-                                </Link>
-                            ) : null
-                        }
-                    </Alert>
 
-                    <hr />
                     <h1 className="text-center">
                         <i className="bi bi-list-task mx-2"></i>ALL TASKS
                     </h1>
