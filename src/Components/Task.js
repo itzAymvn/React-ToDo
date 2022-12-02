@@ -119,13 +119,7 @@ const Task = ({ task }) => {
     return (
         <Card
             border={theme === "light" ? "dark" : "primary"} // change the border color according to the theme
-            bg={
-                task.taskCompleted
-                    ? "success"
-                    : theme === "light"
-                    ? "light"
-                    : "dark"
-            } // change the background color according to the theme and the task status
+            bg={task.taskCompleted ? "success" : theme} // change the background color according to the theme and the task status
             className={"task my-3 " + (task.taskCompleted ? "text-white" : "")}>
             <Card.Header as="div">
                 <Form.Check
