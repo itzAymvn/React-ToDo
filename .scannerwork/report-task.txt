@@ -1,0 +1,6 @@
+projectKey=org.sonarqube:Todo
+serverUrl=http://localhost:9000
+serverVersion=9.7.1.62043
+dashboardUrl=http://localhost:9000/dashboard?id=org.sonarqube%3ATodo
+ceTaskId=AYTTpwUodwLVP0oNjB_L
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYTTpwUodwLVP0oNjB_L
