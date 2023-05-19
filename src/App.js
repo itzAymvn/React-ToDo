@@ -81,7 +81,7 @@ function App() {
             <div
                 className={
                     "min-100 container-fluid py-3 " +
-                    (theme === "light" ? "" : "bg-dark bg-gradient text-light")
+                    (theme === "light" ? "" : "bg-dark text-light")
                 }>
                 <header>
                     <div className="d-flex justify-content-around align-items-center">
